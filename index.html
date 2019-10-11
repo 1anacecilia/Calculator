@@ -1,0 +1,113 @@
+<!--Alumna: Ana Cecilia Florez Arque-->
+<!--Taller: Introduccion a Html5, Css3 y Javascript-->
+<!--Practica 2: Calculadora Estandar-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculadora</title>
+    <style>
+        #calculadora { border:2px outset #16025c }
+        #calculadora td { margin: 0; padding: 0;}
+        #calculadora td input[type="button"] { width: 100%; }
+        .pantalla { border-radius: 5px; text-align: right;}
+    </style>
+    <script>
+        //use 'use strict';
+        
+        var oOperaciones = {
+            sumar: function(o1,o2){
+                return parseInt(o1)+parseInt(o2);
+            },
+            restar: function(o1,o2){
+                return parseInt(o1)-parseInt(o2);
+            },
+            multiplicar: function(o1,o2){
+                return parseInt(o1)*parseInt(o2);
+            },
+            dividir: function(o1,o2){
+                return parseInt(o1)/parseInt(o2);
+            }
+        }
+        function btnDigito(n){
+            var result = document.getElementById('resultado');
+            var str1=result.value;
+            if(str1=="0"){
+                result.value=n;
+                return;
+            }
+            result.value = str1.concat(n);
+        }
+        function operaciones(opera){
+            let result= document.getElementById('resultado');
+            var mem = document.getElementById('memoria');
+            
+            switch(opera){
+                case "C":
+                    result.value=0;
+                    mem.value=0;
+                    return;
+                    break;
+                case "=":
+                    var op = mem.value;
+                    var res = result.value;
+                    var operadores = res.split(op);
+                    switch (op) {
+                        case "+":                           
+                            result.value = 
+                            oOperaciones.sumar(operadores[0],operadores[1]);
+                            break;
+                        case "-":
+                            result.value = oOperaciones.restar(operadores[0],operadores[1]);
+                            break;
+                        case "*":                           
+                            result.value = oOperaciones.multiplicar(operadores[0],operadores[1]);
+                            break;   
+                        case "/":                            
+                            result.value = oOperaciones.dividir(operadores[0],operadores[1]);
+                            break;   
+                                            
+                    }
+                    break;
+                default:            
+            result.value +=opera;
+            mem.value=opera;
+            }
+        }
+    </script>
+</head>
+<body>
+    <!---->
+    <!--Tabla de 4 x 4 para operaciones, basicas y boton Clear-->
+    <!--Tabla de 5 x 4 para agregar botones: punto, retroceso,
+    y operaciones de Calculadora Estandar de Windows-->
+    <!---->
+    <table id="calculadora">
+        <tr><td colspan="4">
+            <input type="text" value="0" id="resultado" class="pantalla"/>
+            <!--Declaracion de memoria como input tipo hidden -->
+            <input type="hidden" value="0" id="memoria"/>
+        </td></tr>
+        <tr>
+            <td><input type="button" value="7" 
+                onclick="btnDigito( this.value )"/></td>
+            <td><input type="button" value="8" onclick="btnDigito( this.value )"/></td>
+            <td><input type="button" value="9" onclick="btnDigito( this.value )"/></td>
+            <td><input type="button" value="/" onclick="operaciones( this.value )"/></td></tr>
+        <tr><td><input type="button" value="4" onclick="btnDigito( this.value )"/></td>
+            <td><input type="button" value="5" onclick="btnDigito( this.value )"/></td>
+            <td><input type="button" value="6" onclick="btnDigito( this.value )"/></td>
+            <td><input type="button" value="*" onclick="operaciones( this.value )"/></td></tr>
+        <tr><td><input type="button" value="1" onclick="btnDigito( this.value )"/></td>
+            <td><input type="button" value="2" onclick="btnDigito( this.value )"/></td>
+            <td><input type="button" value="3" onclick="btnDigito( this.value )"/></td>
+            <td><input type="button" value="-" onclick="operaciones( this.value )"/></td></tr>
+        <tr><td><input type="button" value="0" onclick="btnDigito( this.value )"/></td>
+            <td><input type="button" value="=" onclick="operaciones( this.value )"/></td>               
+            <td><input type="button" value="C" onclick="operaciones( this.value )"/></td> 
+            <td><input type="button" value="+" onclick="operaciones( this.value )"/></td></tr>
+    </table>
+</body>
+</html>
